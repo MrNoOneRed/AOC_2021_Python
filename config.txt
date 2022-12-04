@@ -1,0 +1,2 @@
+[app-config]
+inputPath = .\resources\puzzles

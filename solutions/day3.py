@@ -32,9 +32,13 @@ def puzzle1():
 
     epsilon = convertBinaryToInt(code, True)
 
-    return gamma * epsilon
+    solution = gamma * epsilon
+
+    return solution
 
 def puzzle2(pos: int = 0):
+    solution = 0
+
     oxygenData = data.copy()
     oxygenBinary = getPuzzle2Bits(oxygenData)
     co2Data = data.copy()
@@ -43,7 +47,9 @@ def puzzle2(pos: int = 0):
     oxygen = convertBinaryToInt(oxygenBinary)
     co2 = convertBinaryToInt(co2Binary)
 
-    return oxygen * co2
+    solution = oxygen * co2
+
+    return solution
 
 def getPuzzle2Bits(inputData: [], pos: int = 0, reverse: bool = False):
     solution = 0

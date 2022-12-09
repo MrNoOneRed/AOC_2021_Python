@@ -6,10 +6,10 @@ import os
 import importlib
 import inquirer
 
-configPath = ".\config.txt"
+config_path = ".\config.txt"
 
 # check config path
-if not os.path.exists(configPath):
+if not os.path.exists(config_path):
     raise Exception("config.txt not found")
 
 # check argument
@@ -21,47 +21,47 @@ if not sys.argv[1].isnumeric():
 
 # load config
 configparser = configparser.RawConfigParser()
-configparser.read(configPath)
-inputPath = configparser.get('app-config', 'inputPath')
+configparser.read(config_path)
+input_path = configparser.get('app-config', 'input_path')
 
 # check config
 if not configparser.has_section('app-config'):
     raise Exception("There is no section app-config in config.txt")
-if not configparser.has_option('app-config', 'inputPath'):
-    raise Exception("There is no option inputPath defined")
+if not configparser.has_option('app-config', 'input_path'):
+    raise Exception("There is no option input_path defined")
 
 # check puzzle path
-if not os.path.exists(inputPath):
+if not os.path.exists(input_path):
     raise Exception("Path to puzzle inputs not exists")
 
 # import solution
 day = sys.argv[1]
-solutionFile = ".\solutions\day" + day + ".py"
-solutionModule = 'solutions.day' + day
-inputPath += "\\" + day
+solution_file = ".\solutions\day" + day + ".py"
+solution_module = 'solutions.day' + day
+input_path += "\\" + day
 
 # check solution
-if not os.path.isfile(solutionFile):
+if not os.path.isfile(solution_file):
     raise Exception("Solution not exists")
 
 # get all puzzle inputs for selected day
-puzzleFiles = [f for f in os.listdir(inputPath) if os.path.isfile(os.path.join(inputPath, f))]
+puzzle_files = [f for f in os.listdir(input_path) if os.path.isfile(os.path.join(input_path, f))]
 
 # check inputs for puzzles
-if len(puzzleFiles) == 0:
+if len(puzzle_files) == 0:
     raise Exception("You dont have any puzzle inputs")
 
 # ask user which puzzle input to use
-inputsChoose = [
-    inquirer.List('input', message="What input you want to check ?", choices=puzzleFiles)
+inputs_choose = [
+    inquirer.List('input', message="What input you want to check ?", choices=puzzle_files)
 ]
-inputSelected = inquirer.prompt(inputsChoose)["input"]
+input_selected = inquirer.prompt(inputs_choose)["input"]
 
 # load module
-module = importlib.import_module(solutionModule)
+module = importlib.import_module(solution_module)
 
 # parse input data to use in puzzles
-module.parseInput(os.path.join(inputPath, inputSelected))
+module.parse_input(os.path.join(input_path, input_selected))
 
 # get solution
 print("Solution for puzzle1:", module.puzzle1())

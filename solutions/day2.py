@@ -2,8 +2,8 @@
 
 data = []
 
-def parseInput(inputPath):
-    with open(inputPath) as file:
+def parse_input(input_path):
+    with open(input_path) as file:
         for line in file:
             commands = line.strip().split()
             data.append({

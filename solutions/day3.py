@@ -2,8 +2,8 @@
 
 data = []
 
-def parseInput(inputPath):
-    with open(inputPath) as file:
+def parse_input(input_path):
+    with open(input_path) as file:
         for line in file:
             bits = line.strip()
             data.append(bits)
@@ -28,9 +28,9 @@ def puzzle1():
         else:
             code += '1'
 
-    gamma = convertBinaryToInt(code)
+    gamma = convert_binary_to_int(code)
 
-    epsilon = convertBinaryToInt(code, True)
+    epsilon = convert_binary_to_int(code, True)
 
     solution = gamma * epsilon
 
@@ -39,19 +39,19 @@ def puzzle1():
 def puzzle2(pos: int = 0):
     solution = 0
 
-    oxygenData = data.copy()
-    oxygenBinary = getPuzzle2Bits(oxygenData)
-    co2Data = data.copy()
-    co2Binary = getPuzzle2Bits(co2Data, 0, True)
+    oxygen_data = data.copy()
+    oxygen_binary = get_puzzle_to_bits(oxygen_data)
+    co2_data = data.copy()
+    co2_binary = get_puzzle_to_bits(co2_data, 0, True)
 
-    oxygen = convertBinaryToInt(oxygenBinary)
-    co2 = convertBinaryToInt(co2Binary)
+    oxygen = convert_binary_to_int(oxygen_binary)
+    co2 = convert_binary_to_int(co2_binary)
 
     solution = oxygen * co2
 
     return solution
 
-def getPuzzle2Bits(inputData: [], pos: int = 0, reverse: bool = False):
+def get_puzzle_to_bits(input_data: [], pos: int = 0, reverse: bool = False):
     solution = 0
 
     if not reverse:
@@ -59,48 +59,48 @@ def getPuzzle2Bits(inputData: [], pos: int = 0, reverse: bool = False):
     else:
         compare = 1
 
-    if pos < len(inputData[0]):
+    if pos < len(input_data[0]):
         one = 0
         zero = 0
-        indexesToRemove = []
+        indexes_to_remove = []
 
-        for lineIndex in range(0, len(inputData)):
-            if int(inputData[lineIndex][pos]) == 0:
+        for line_index in range(0, len(input_data)):
+            if int(input_data[line_index][pos]) == 0:
                 zero += 1
             else:
                 one += 1
 
-        for lineIndex in range(0, len(inputData)):
+        for line_index in range(0, len(input_data)):
             if one == zero:
-                if int(inputData[lineIndex][pos]) == reverse:
-                    indexesToRemove.append(lineIndex)
+                if int(input_data[line_index][pos]) == reverse:
+                    indexes_to_remove.append(line_index)
             else:
-                if int(inputData[lineIndex][pos]) == reverse and one > zero:
-                    indexesToRemove.append(lineIndex)
+                if int(input_data[line_index][pos]) == reverse and one > zero:
+                    indexes_to_remove.append(line_index)
 
-                if int(inputData[lineIndex][pos]) != reverse and zero > one:
-                    indexesToRemove.append(lineIndex)
+                if int(input_data[line_index][pos]) != reverse and zero > one:
+                    indexes_to_remove.append(line_index)
 
-        indexesToRemove = indexesToRemove[::-1]
+        indexes_to_remove = indexes_to_remove[::-1]
 
-        for index in indexesToRemove:
-            inputData.pop(index)
+        for index in indexes_to_remove:
+            input_data.pop(index)
 
-        if len(inputData) > 1 and pos + 1 < len(inputData[0]):
-            return getPuzzle2Bits(inputData, pos + 1, reverse)
+        if len(input_data) > 1 and pos + 1 < len(input_data[0]):
+            return get_puzzle_to_bits(input_data, pos + 1, reverse)
         else:
-            solution = inputData[0]
+            solution = input_data[0]
 
     return solution
 
-def convertBinaryToInt(code: str, reverse: bool = False):
+def convert_binary_to_int(code: str, reverse: bool = False):
     if reverse:
-        reverseCode = ''
+        reverse_code = ''
         for i in code:
             if i == '0':
-                reverseCode += '1'
+                reverse_code += '1'
             else:
-                reverseCode += '0'
-        code = reverseCode
+                reverse_code += '0'
+        code = reverse_code
 
     return int(code, 2)
